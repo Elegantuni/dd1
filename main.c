@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 int main(int argc, char *argv[])
 {
@@ -18,14 +19,19 @@ int main(int argc, char *argv[])
 	int fp2;
 	ssize_t numsize;
 	char buffer1[maxnum];
-	
+	struct stat sb;
+
 	fp1 = open(argv[1], O_RDONLY);
-	fp2 = open(argv[2], O_WRONLY);
+	fp2 = open(argv[2], O_WRONLY | O_CREAT);
 
 	while((numsize = read(fp1, buffer1, maxnum)) > 0)
 	{
 		write(fp2, buffer1, numsize);
 	}
+
+	stat(argv[1], &sb);
+
+	chmod(argv[2], sb.st_mode);
 
 	return 0;
 }
