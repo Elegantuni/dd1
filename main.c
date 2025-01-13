@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	struct stat sb;
 
 	fp1 = open(argv[1], O_RDONLY);
-	fp2 = open(argv[2], O_WRONLY | O_CREAT);
+	fp2 = open(argv[2], O_RDWR | O_CREAT);
 
 	while((numsize = read(fp1, buffer1, maxnum)) > 0)
 	{
